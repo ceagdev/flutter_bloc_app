@@ -39,35 +39,33 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: BlocListener<CounterCubit, CounterState>(
-        listener: (context, state) {
-          if (state.wasIncremented == true) {
-            Scaffold.of(context).showBottomSheet((context) {
-              return Text('Incremented');
-            });
-          }else if (state.wasIncremented == false) {
-            Scaffold.of(context).showBottomSheet((context) {
-              return Text('Decremented');
-            });
-          }
-        },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
-              BlocBuilder<CounterCubit, CounterState>(
-                builder: (context, state) {
-                  return Text(
-                    '${state.counterValue}',
-                    style: Theme.of(context).textTheme.headline4,
-                  );
-                },
-              ),
-            ],
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
+            ),
+            BlocConsumer<CounterCubit, CounterState>(
+              listener: (context, state) {
+                if (state.wasIncremented == true) {
+                  Scaffold.of(context).showBottomSheet((context) {
+                    return Text('Incremented');
+                  });
+                } else if (state.wasIncremented == false) {
+                  Scaffold.of(context).showBottomSheet((context) {
+                    return Text('Decremented');
+                  });
+                }
+              },
+              builder: (context, state) {
+                return Text(
+                  '${state.counterValue}',
+                  style: Theme.of(context).textTheme.headline4,
+                );
+              },
+            ),
+          ],
         ),
       ),
       floatingActionButton: Row(
