@@ -46,10 +46,14 @@ class _SecondScreenState extends State<SecondScreen> {
                 );
               },
             ),
+             SizedBox(
+              height: 24,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
+                  backgroundColor: widget.color,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).increment();
                   },
@@ -57,6 +61,7 @@ class _SecondScreenState extends State<SecondScreen> {
                   child: Icon(Icons.add),
                 ),
                 FloatingActionButton(
+                  backgroundColor: widget.color,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrement();
                   },
@@ -69,6 +74,7 @@ class _SecondScreenState extends State<SecondScreen> {
               height: 24.0,
             ),
             MaterialButton(
+              color: Colors.redAccent,
               onPressed: () {
                 Navigator.of(context).pop();
               },

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_app/constants/enums.dart';
+import 'package:flutter_bloc_app/logic/cubit/internet_cubit.dart';
 import '../../logic/cubit/counter_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,6 +26,20 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            BlocBuilder<InternetCubit, InternetState>(
+              builder: (context, state) {
+                if (state is InternetConnected &&
+                    state.connectionType == ConnectionType.Wifi) {
+                  return Text('Wifi');
+                } else if (state is InternetConnected &&
+                    state.connectionType == ConnectionType.Mobile) {
+                  return Text('Mobile');
+                }else if (state is InternetDisconnected){
+                  return Text('Disconnected');
+                }
+                return CircularProgressIndicator();
+              },
+            ),
             Text(
               'You have pushed the button this many times:',
             ),
@@ -46,30 +62,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).increment();
-                  },
-                  tooltip: 'Increment',
-                  child: Icon(Icons.add),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).decrement();
-                  },
-                  tooltip: 'Decrement',
-                  child: Icon(Icons.remove),
-                ),
-              ],
-            ),
             SizedBox(
-              height: 24.0,
+              height: 24,
             ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     FloatingActionButton(
+            //       onPressed: () {
+            //         BlocProvider.of<CounterCubit>(context).increment();
+            //       },
+            //       tooltip: 'Increment',
+            //       child: Icon(Icons.add),
+            //     ),
+            //     FloatingActionButton(
+            //       onPressed: () {
+            //         BlocProvider.of<CounterCubit>(context).decrement();
+            //       },
+            //       tooltip: 'Decrement',
+            //       child: Icon(Icons.remove),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(
+            //   height: 24.0,
+            // ),
             MaterialButton(
-              color: widget.color,
+              color: Colors.redAccent,
               onPressed: () {
                 Navigator.of(context).pushNamed('/second');
               },
@@ -82,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 24.0,
             ),
             MaterialButton(
-              color: widget.color,
+              color: Colors.greenAccent,
               onPressed: () {
                 Navigator.of(context).pushNamed('/third');
               },

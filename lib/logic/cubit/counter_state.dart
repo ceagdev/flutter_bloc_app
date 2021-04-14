@@ -12,5 +12,4 @@ class CounterState extends Equatable {
   @override
   List<Object> get props => [this.counterValue, this.wasIncremented];
 
-
 }
