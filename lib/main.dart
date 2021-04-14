@@ -16,14 +16,19 @@ class MyApp extends StatelessWidget {
   final AppRouter appRouter;
   final Connectivity connectivity;
 
-  const MyApp({Key key, @required this.appRouter, @required this.connectivity}) : super(key: key);
+  const MyApp({Key key, @required this.appRouter, @required this.connectivity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<InternetCubit>(create: (context) => InternetCubit(connectivity: connectivity),),
-        BlocProvider<CounterCubit>(create: (context) => CounterCubit(internetCubit: BlocProvider.of<InternetCubit>(context)),),
+        BlocProvider<InternetCubit>(
+          create: (context) => InternetCubit(connectivity: connectivity),
+        ),
+        BlocProvider<CounterCubit>(
+          create: (context) => CounterCubit(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
